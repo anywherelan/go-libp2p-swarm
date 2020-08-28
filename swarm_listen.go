@@ -40,7 +40,12 @@ func (s *Swarm) Listen(addrs ...ma.Multiaddr) error {
 func (s *Swarm) AddListenAddr(a ma.Multiaddr) error {
 	tpt := s.TransportForListening(a)
 	if tpt == nil {
-		return ErrNoTransport
+		select {
+		case <-s.proc.Closing():
+			return ErrSwarmClosed
+		default:
+			return ErrNoTransport
+		}
 	}
 
 	list, err := tpt.Listen(a)
