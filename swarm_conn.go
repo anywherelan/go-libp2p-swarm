@@ -197,6 +197,7 @@ func (c *Conn) addStream(ts mux.MuxedStream, dir network.Direction) (*Stream, er
 	stat := network.Stat{
 		Direction: dir,
 		Opened:    time.Now(),
+		Extra:     make(map[interface{}]interface{}),
 	}
 	s := &Stream{
 		stream: ts,

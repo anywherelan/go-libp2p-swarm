@@ -201,7 +201,7 @@ func (s *Swarm) addConn(tc transport.CapableConn, dir network.Direction) (*Conn,
 	}
 
 	// Wrap and register the connection.
-	stat := network.Stat{Direction: dir, Opened: time.Now()}
+	stat := network.Stat{Direction: dir, Opened: time.Now(), Extra: make(map[interface{}]interface{})}
 	c := &Conn{
 		conn:  tc,
 		swarm: s,
